@@ -1,7 +1,13 @@
 sudo: required
 services:
   - docker
+env:
+  global:
+    # Definition of the environment variable SHA. The value is the result of the command git rev-parse HEAD => GIT SHA
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
+  # decrypt the file service-account.enc and create service-account.json file
   - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
   # Install Google cloud SDK CLI
   - curl https://sdk.cloud.google.com | bash > /dev/null;
@@ -11,3 +17,24 @@ before_install:
   - gcloud components update kubectl
   # Authenticate service account with the key file service-account.json
   - gcloud auth activate-service-account --key-file service-account.json
+  # Link to the project
+  - gcloud config set project multi-k8s-347408
+  # Gives the location
+  - gcloud config set compute/zone europe-west1-b
+  # Tells our container to reach the project on GCP multi-cluster and to work with it.
+  - gcloud container clusters get-credentials multi-cluster
+  # Connect to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # Build image
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # Run test
+  - docker run -e CI=true stephengrider/react-test npm test
+
+# Deploy newest images
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
