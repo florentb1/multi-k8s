@@ -6,9 +6,9 @@ docker push florentb1/multi-client:latest
 docker push florentb1/multi-server:latest
 docker push florentb1/multi-worker:latest
 
-docker push florentb1/multi-client:latest:$SHA
-docker push florentb1/multi-server:latest:$SHA
-docker push florentb1/multi-worker:latest:$SHA
+docker push florentb1/multi-client:$SHA
+docker push florentb1/multi-server:$SHA
+docker push florentb1/multi-worker:$SHA
 
 kubectl apply -f k8s
 kubectl set image deployments/server-deployment server=florentb1/multi-server:$SHA
