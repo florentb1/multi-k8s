@@ -17,6 +17,6 @@ spec:
           image: stephengrider/multi-worker
           env:
             - name: REDIS_HOST
-              value: redi-cluster-ip-service
+              value: redis-cluster-ip-service
             - name: REDIS_PORT
               value: '6379'
