@@ -1,0 +1,14 @@
+    apiVersion: cert-manager.io/v1
+     
+    kind: Certificate
+    metadata:
+      name: test-sandbox-phiou-com-tls
+    spec:
+      secretName: test-sandbox-phiou-com
+      issuerRef:
+        name: letsencrypt-prod
+        kind: ClusterIssuer
+      commonName: test-sandbox.phiou.com
+      dnsNames:
+        - test-sandbox.phiou.com
+        - www.test-sandbox.phiou.com
