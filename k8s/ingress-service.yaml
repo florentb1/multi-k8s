@@ -10,9 +10,9 @@ metadata:
 spec:
   tls:
     - hosts:
-      - test-sandbox.phiou.com
-      - www.test-sandbox.phiou.com
-    secretName: test-sandbox-phiou-com
+        - test-sandbox.phiou.com
+        - www.test-sandbox.phiou.com
+      secretName: test-sandbox-phiou-com
   rules:
     - host: test-sandbox.phiou.com
       http:
