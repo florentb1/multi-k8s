@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: "test@test.com"
+    email: "fbarbet@dataneo.fr"
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
